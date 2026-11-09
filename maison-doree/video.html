@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison Dorée — Vidéo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root { --cream:#FAF5EC; --ink:#2B1D12; --terracotta:#B85C38; --sage:#7D8C6F; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { height:100%; }
+  body { background:var(--ink); overflow:hidden; font-family:'Inter',sans-serif; }
+
+  .stage { height:100vh; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+
+  .glow { position:absolute; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(184,92,56,.16), transparent 65%); top:50%; left:50%; }
+
+  .particle { position:absolute; border-radius:50%; background:var(--terracotta); opacity:.18; animation: float 7s ease-in-out infinite; }
+  .particle.p1 { width:26px; height:26px; top:16%; left:12%; }
+  .particle.p2 { width:14px; height:14px; top:24%; right:14%; background:var(--sage); animation-delay:-2s; }
+  .particle.p3 { width:9px; height:9px; bottom:22%; left:18%; animation-delay:-4s; }
+  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-34px);} }
+
+  .intro { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px; }
+
+  .dough { width:170px; height:170px; border-radius:50% 47% 52% 48% / 55% 48% 52% 45%; background:var(--sage); border:3px solid var(--ink); box-shadow:0 0 90px rgba(184,92,56,.35); }
+
+  .line { overflow:hidden; }
+  .line span { display:block; font-family:'Fraunces',serif; font-weight:400; font-size: clamp(52px, 9vw, 108px); letter-spacing:-2px; line-height:1.02; color:var(--ink); }
+  .line.two span { color:var(--terracotta); font-style:italic; }
+
+  .sub { font-family:'Caveat',cursive; font-size:34px; color:var(--terracotta); transform:rotate(-3deg); }
+
+  .tagline { position:absolute; bottom:42px; left:0; right:0; text-align:center; font-size:12px; letter-spacing:4px; text-transform:uppercase; color:#7a6a58; }
+
+  .hud { position:absolute; bottom:0; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:14px; padding:0 20px 26px; z-index:5; }
+  .bar { width:min(420px, 70vw); height:2px; background:rgba(250,245,236,.25); cursor:pointer; }
+  .bar div { height:100%; width:0; background:var(--terracotta); }
+  .row { display:flex; gap:14px; align-items:center; }
+  .ctl { background:rgba(250,245,236,.1); color:var(--cream); border:1.5px solid rgba(250,245,236,.4); cursor:pointer; width:46px; height:46px; border-radius:50%; font-size:16px; transition:background .3s; }
+  .ctl:hover { background:rgba(250,245,236,.25); }
+  #time { color:var(--cream); font-size:13px; letter-spacing:2px; font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 560px) { .tagline { bottom:26px; } }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="glow"></div>
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="intro" id="intro">
+      <div class="dough"></div>
+      <div class="line one"><span>Maison</span></div>
+      <div class="line two"><span>Dorée</span></div>
+      <div class="sub">La douceur commence ici</div>
+      <div class="tagline">Fait maison • Depuis 1987</div>
+    </div>
+    <div class="hud">
+      <div class="bar" id="bar"><div id="barfill"></div></div>
+      <div class="row">
+        <button class="ctl" id="play">▶</button>
+        <div id="time">0:00 / 0:16</div>
+        <button class="ctl" id="music">🎵</button>
+        <button class="ctl" id="voice">🔊</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const DURATION = 16000;
+  const intro = document.getElementById('intro');
+  const glow = document.querySelector('.glow');
+  const dough = document.querySelector('.dough');
+  const line1 = document.querySelector('.line.one span');
+  const line2 = document.querySelector('.line.two span');
+  const sub = document.querySelector('.sub');
+  const tagline = document.querySelector('.tagline');
+  const bar = document.getElementById('barfill');
+  const timeEl = document.getElementById('time');
+  const playBtn = document.getElementById('play');
+  const musicBtn = document.getElementById('music');
+  const voiceBtn = document.getElementById('voice');
+
+  const EASE = 'cubic-bezier(0.22,1,0.36,1)';
+  const anims = [];
+  function add(el, kf, dur, delay) {
+    const a = el.animate(kf, {duration: dur, delay: delay, fill: 'forwards', easing: EASE});
+    anims.push(a);
+    return a;
+  }
+
+  add(glow, [{transform:'translate(-50%, -50%) scale(1)'},{transform:'translate(-50%, -50%) scale(1.12)'}], 5000, 0);
+  add(dough, [{transform:'scale(0.15)'},{transform:'scale(1)'}], 1400, 200);
+  add(line1, [{transform:'translateY(115%)'},{transform:'translateY(0)'}], 1000, 500);
+  add(line2, [{transform:'translateY(115%)'},{transform:'translateY(0)'}], 1000, 1000);
+  add(sub, [{opacity:0, transform:'translateY(14px) rotate(-3deg)'},{opacity:1, transform:'translateY(0) rotate(-3deg)'}], 1000, 900);
+  add(tagline, [{opacity:0},{opacity:1}], 1000, 2200);
+  add(intro, [{opacity:1},{opacity:0}], 1000, 14500);
+
+  let playing = false, startTs = 0, rafId = null;
+
+  function tick() {
+    if (playing) {
+      const p = Math.min((performance.now() - startTs) / DURATION, 1);
+      bar.style.width = (p * 100) + '%';
+      const s = Math.floor(p * DURATION / 1000);
+      const m = String(Math.floor(s / 60)).padStart(2, '0');
+      const sec = String(s % 60).padStart(2, '0');
+      timeEl.textContent = m + ':' + sec + ' / ' + m + ':16';
+      if (p >= 1) { pause(); }
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function play() {
+    anims.forEach(a => a.play());
+    startMusic();
+    speak();
+    playing = true;
+    startTs = performance.now();
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(tick);
+  }
+  function pause() {
+    anims.forEach(a => a.pause());
+    stopMusic();
+    playing = false;
+    cancelAnimationFrame(rafId);
+  }
+
+  playBtn.onclick = play;
+  const pauseBtn = document.createElement('button');
+  pauseBtn.className = 'ctl';
+  pauseBtn.textContent = '⏸';
+  pauseBtn.onclick = pause;
+  document.querySelector('.row').insertBefore(pauseBtn, playBtn);
+
+  document.getElementById('bar').addEventListener('click', (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const p = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
+    anims.forEach(a => a.currentTime = p * DURATION);
+    startTs = performance.now() - (p * DURATION);
+    if (!playing) play();
+  });
+
+  // ---------- MUSIQUE ----------
+  let audioCtx = null;
+  function startMusic() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = audioCtx;
+    const master = ctx.createGain();
+    master.gain.value = 0.22;
+    master.connect(ctx.destination);
+    const bpm = 80, beat = 60 / bpm;
+    const melody = [523.25,659.25,783.99,659.25, 523.25,392.0,329.63,392.0, 493.0,587.33,698.46,587.33, 440.0,523.25,587.33,523.25];
+    let t = ctx.currentTime + 0.15;
+    melody.forEach((f) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = f;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.16, t + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.001, t + beat * 0.85);
+      osc.connect(g); g.connect(master);
+      osc.start(t); osc.stop(t + beat * 0.9);
+      t += beat * 0.92;
+    });
+  }
+  function stopMusic() { if (audioCtx) audioCtx.suspend(); }
+
+  // ---------- VOIX OFF ----------
+  function speak() {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance("La douceur commence ici.");
+    u.lang = 'fr-FR'; u.rate = 0.92; u.pitch = 1;
+    window.speechSynthesis.speak(u);
+  }
+
+  musicBtn.onclick = () => { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); audioCtx.state === 'suspended' ? audioCtx.resume() : startMusic(); };
+  voiceBtn.onclick = speak;
+</script>
+</body>
+</html>

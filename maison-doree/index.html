@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison Dorée — Boulangerie artisanale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Caveat:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF5EC;
+    --cream-dark: #F1E7D7;
+    --ink: #2B1D12;
+    --terracotta: #B85C38;
+    --terracotta-dark: #9A4726;
+    --sage: #7D8C6F;
+    --wheat: #D9B98A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 400; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 22px 0;
+    transition: background .3s, padding .3s;
+  }
+  nav.scrolled { background: rgba(250,245,236,.92); backdrop-filter: blur(8px); padding: 12px 0; }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Fraunces', serif; font-size: 26px; letter-spacing: .5px; }
+  .logo em { color: var(--terracotta); font-style: italic; }
+  .nav-links { display: flex; gap: 34px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--ink); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; font-weight: 400; }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-cta {
+    background: var(--ink); color: var(--cream) !important;
+    padding: 10px 22px; border-radius: 100px; font-size: 12px !important;
+  }
+  .burger { display: none; font-size: 26px; background: none; border: none; cursor: pointer; color: var(--ink); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 140px 0 90px;
+    position: relative;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 60px; align-items: center; }
+  .hero-tag {
+    font-family: 'Caveat', cursive;
+    font-size: 26px;
+    color: var(--terracotta);
+    transform: rotate(-3deg);
+    display: inline-block;
+  }
+  .hero h1 {
+    font-size: clamp(52px, 7.5vw, 104px);
+    line-height: 0.98;
+    letter-spacing: -2px;
+    margin: 18px 0 26px;
+  }
+  .hero h1 em { font-style: italic; color: var(--terracotta); font-weight: 300; }
+  .hero p { font-size: 18px; max-width: 440px; color: #5c4a3a; }
+  .hero-actions { display: flex; gap: 18px; margin-top: 40px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-block;
+    padding: 16px 34px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: transform .2s, box-shadow .2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-solid { background: var(--terracotta); color: #FFF8EF; box-shadow: 5px 5px 0 var(--ink); }
+  .btn-solid:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--ink); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--cream); }
+
+  /* badge rotation */
+  .hero-badge {
+    position: absolute;
+    top: 34px; right: 40px;
+    width: 150px; height: 150px;
+    animation: spin 14s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero-badge svg { position: absolute; inset: 0; }
+  .hero-badge .inner { position: absolute; inset: 30px; background: var(--cream); border: 1.5px solid var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'Caveat', cursive; font-size: 22px; transform: rotate(-12deg); }
+  .hero-badge text { font-family: 'Caveat', cursive; font-size: 21px; fill: var(--terracotta); }
+
+  /* hero art */
+  .hero-art { position: relative; display: flex; justify-content: center; }
+  .hero-circle {
+    width: min(420px, 80vw); aspect-ratio: 1;
+    border-radius: 50% 47% 52% 48% / 55% 48% 52% 45%;
+    background: var(--cream-dark);
+    border: 2px solid var(--ink);
+    position: relative;
+  }
+  .hero-circle::after {
+    content: '';
+    position: absolute; inset: 26px;
+    border-radius: 46% 54% 50% 50% / 55% 50% 50% 45%;
+    background: var(--sage);
+  }
+  .hero-circle .slice {
+    position: absolute; inset: 0; border-radius: inherit;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(217,185,138,.8), transparent 55%),
+      repeating-radial-gradient(circle at 50% 120%, transparent 0 26px, rgba(43,29,18,.05) 26px 27px);
+  }
+  .float-chip {
+    position: absolute;
+    background: var(--ink); color: var(--cream);
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 10px 18px; border-radius: 100px;
+    font-family: 'Inter', sans-serif; font-weight: 400;
+  }
+  .float-chip.one { top: 12%; left: -4%; animation: bob 5s ease-in-out infinite; }
+  .float-chip.two { bottom: 16%; right: -6%; animation: bob 6s ease-in-out infinite reverse; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee { background: var(--ink); color: var(--cream); overflow: hidden; padding: 18px 0; }
+  .marquee-track { display: flex; gap: 60px; width: max-content; animation: scroll 26s linear infinite; }
+  .marquee-track span { font-family: 'Fraunces', serif; font-size: 22px; white-space: nowrap; }
+  .marquee-track span i { color: var(--terracotta); font-style: normal; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 130px 0; }
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 30px;
+    color: var(--terracotta);
+    display: block;
+    margin-bottom: 14px;
+  }
+  .section-title { font-size: clamp(38px, 5vw, 62px); line-height: 1.05; letter-spacing: -1px; max-width: 700px; }
+  .section-title em { font-style: italic; color: var(--terracotta); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .about-visual { position: relative; }
+  .about-photo {
+    border: 2px solid var(--ink);
+    background: var(--cream-dark);
+    aspect-ratio: 4/5;
+    box-shadow: 12px 12px 0 var(--terracotta);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Caveat', cursive; font-size: 60px; color: var(--terracotta);
+  }
+  .about-photo small { position: absolute; bottom: -18px; left: -18px; background: var(--ink); color: var(--cream); padding: 12px 20px; font-family: 'Caveat', cursive; font-size: 22px; transform: rotate(-4deg); }
+  .about-text p { margin-bottom: 20px; color: #5c4a3a; font-size: 16.5px; }
+  .stats { display: flex; gap: 40px; margin-top: 34px; }
+  .stat b { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 400; display: block; color: var(--terracotta); }
+  .stat span { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  /* ---------- MENU ---------- */
+  .menu { background: var(--cream-dark); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .menu-list { margin-top: 60px; }
+  .menu-item {
+    display: grid;
+    grid-template-columns: 70px 1fr auto;
+    gap: 24px;
+    align-items: baseline;
+    padding: 26px 10px;
+    border-bottom: 1.5px dashed rgba(43,29,18,.3);
+    transition: background .25s, padding .25s;
+  }
+  .menu-item:hover { background: rgba(184,92,56,.07); padding-left: 26px; }
+  .menu-item .dots { border-bottom: 1.5px dotted rgba(43,29,18,.35); transform: translateY(-6px); }
+  .menu-item .price { font-family: 'Fraunces', serif; font-size: 26px; color: var(--terracotta); }
+  .menu-item h3 { font-size: 30px; }
+  .menu-item p { color: #7a6a58; font-size: 14.5px; max-width: 460px; }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 60px; }
+  .g-card { aspect-ratio: 4/5; border: 2px solid var(--ink); position: relative; overflow: hidden; }
+  .g-card:nth-child(1) { background: linear-gradient(150deg, #D9B98A, #B85C38); transform: rotate(-1.2deg); }
+  .g-card:nth-child(2) { background: linear-gradient(150deg, #7D8C6F, #4E5B43); transform: rotate(1deg); margin-top: 30px; }
+  .g-card:nth-child(3) { background: linear-gradient(150deg, #F1E7D7, #C98B5E); transform: rotate(-0.6deg); }
+
+  .g-card { opacity:0; transform: translateY(46px); transition: opacity .9s ease, transform .9s ease; }
+  .g-card.in-view { opacity:1; transform: translateY(0); }
+  .g-card.in-view:nth-child(1) { transform: translateY(0) rotate(-1.2deg); }
+  .g-card.in-view:nth-child(2) { transform: translateY(0) rotate(1deg); }
+  .g-card.in-view:nth-child(3) { transform: translateY(0) rotate(-0.6deg); }
+
+  .g-card::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"); }
+  .g-card .cap {
+    position: absolute; bottom: 14px; left: 14px; right: 14px;
+    background: rgba(250,245,236,.92); border: 1.5px solid var(--ink);
+    padding: 10px 16px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi { background: var(--ink); color: var(--cream); }
+  .testi .section-title { color: var(--cream); }
+  .testi .section-title em { color: var(--wheat); }
+  .testi blockquote { font-family: 'Fraunces', serif; font-size: clamp(26px, 3.4vw, 42px); line-height: 1.35; font-weight: 300; max-width: 900px; margin: 40px 0; }
+  .testi blockquote em { color: var(--terracotta); }
+  .testi-author { font-family: 'Caveat', cursive; font-size: 30px; color: var(--wheat); }
+
+  /* ---------- CTA / FOOTER ---------- */
+  footer { background: var(--ink); color: var(--cream); padding: 90px 0 40px; border-top: 2px solid var(--terracotta); }
+  footer .big { font-family: 'Fraunces', serif; font-size: clamp(40px, 6vw, 84px); line-height: 1.05; margin-bottom: 50px; }
+  footer .big em { color: var(--terracotta); }
+  .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding-bottom: 60px; border-bottom: 1px solid rgba(250,245,236,.15); }
+  .footer-grid h4 { font-family: 'Caveat', cursive; font-size: 30px; color: var(--wheat); margin-bottom: 16px; font-weight: 500; }
+  .footer-grid p, .footer-grid li { font-size: 14.5px; color: rgba(250,245,236,.75); list-style: none; }
+  .footer-bottom { padding-top: 30px; display: flex; justify-content: space-between; font-size: 13px; color: rgba(250,245,236,.5); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-art { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 60px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    footer .footer-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .burger { display: block; }
+  }
+  @media (max-width: 560px) {
+    section { padding: 90px 0; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .menu-item { grid-template-columns: 1fr; gap: 6px; }
+    .menu-item .dots { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <div class="logo">Maison <em>Dorée</em></div>
+    <ul class="nav-links">
+      <li><a href="#histoire">Notre histoire</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#realisations">Boulots</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="burger" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-badge">
+    <svg viewBox="0 0 100 100">
+      <defs><path id="circ" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/></defs>
+      <text><textPath href="#circ">FAIT MAISON • DEPUI 1987 • </textPath></text>
+    </svg>
+    <div class="inner">Bon appétit</div>
+  </div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-tag">Fait avec ♥ et farine</span>
+      <h1>La douceur<br>commence <em>ici.</em></h1>
+      <p>Un petit four pas comme les autres. Pain au levain, viennoiseries au beurre fermier, gâteaux faits main — chaque bouchée porte la marque d'un vrai boulanger.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-solid">Découvrir le menu</a>
+        <a href="#contact" class="btn btn-ghost">Notre adresse</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-circle"><div class="slice"></div></div>
+      <div class="float-chip one">100% Beurre fermier</div>
+      <div class="float-chip two">Levain naturel</div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Pain au levain <i>•</i></span><span>Viennnoiseries <i>•</i></span><span>Gâteaux maison <i>•</i></span>
+    <span>Brioches <i>•</i></span><span>Sourdough <i>•</i></span><span>Croustades <i>•</i></span>
+    <span>Pain au levain <i>•</i></span><span>Viennnoiseries <i>•</i></span><span>Gâteaux maison <i>•</i></span>
+    <span>Brioches <i>•</i></span><span>Sourdough <i>•</i></span><span>Croustades <i>•</i></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="histoire">
+  <div class="wrap">
+    <span class="section-label">Notre histoire</span>
+    <h2 class="section-title">Un four qui <em>raconte</em> l'histoire</h2>
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-photo">
+          🥐
+          <small>Depuis 1987</small>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>C'est en 1987 qu'Élodie Martin a allumé un four à bois dans la cuisine de ses parents. Aujourd'hui, le four a mûri, mais la recette n'a pas changé : du temps, de la patience, et du beurre.</p>
+        <p>Entre les mardres qui sentent bon le pain, les commandes spéciales des anniversaires, et les matins où le pain sort du four à 5h du matin — la maison Dorée, c'est un petit musée à ciel ouvert.</p>
+        <div class="stats">
+          <div class="stat"><b>38</b><span>ans de four</span></div>
+          <div class="stat"><b>14</b><span>recettes de famille</span></div>
+          <div class="stat"><b>100%</b><span>beurre fermier</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <span class="section-label">La carte</span>
+    <h2 class="section-title">Du matin au <em>déjeuner</em></h2>
+    <div class="menu-list">
+      <div class="menu-item">
+        <span class="dots"></span>
+        <div><h3>Le Pain</h3><p>Au levain naturel, fermentation lente. Croûte craquante, mie alvéolée.</p></div>
+        <span class="price">7€</span>
+      </div>
+      <div class="menu-item">
+        <span class="dots"></span>
+        <div><h3>La Brioche</h3><p>Beurre AOP, œuf de ferme. 27 couches, 3 jours de maturation.</p></div>
+        <span class="price">4,5€</span>
+      </div>
+      <div class="menu-item">
+        <span class="dots"></span>
+        <div><h3>Le Gâteau des Amis</h3><p>Classique familial : frangipane, amandes, caramel au beurre salé.</p></div>
+        <span class="price">28€</span>
+      </div>
+      <div class="menu-item">
+        <span class="dots"></span>
+        <div><h3>Les Croissants</h3><p>100 feuillets, 27 couches. Oui, on a compté.</p></div>
+        <span class="price">3,2€</span>
+      </div>
+      <div class="menu-item">
+        <span class="dots"></span>
+        <div><h3>La Tarte au Citron</h3><p>Crustine amélie, curd au citron de Menton, meringue italienne.</p></div>
+        <span class="price">21€</span>
+      </div>
+      <div class="menu-item">
+        <span class="dots"></span>
+        <div><h3>Le Chocolat Doré</h3><p>70% valrhona, fondant au chocolat chaud. Sans excès, évidemment.</p></div>
+        <span class="price">19€</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="realisations">
+  <div class="wrap">
+    <span class="section-label">Nos boulots</span>
+    <h2 class="section-title">La boutique, <em>en images</em></h2>
+    <div class="gallery-grid">
+      <div class="g-card"><div class="cap">Matin de mardi</div></div>
+      <div class="g-card"><div class="cap">Commande spéciale</div></div>
+      <div class="g-card"><div class="cap">Boulangerie du quartier</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="wrap">
+    <span class="section-label">Ils en parlent mieux que nous</span>
+    <h2 class="section-title">Une boulangerie,<br>des <em>souvenirs</em></h2>
+    <blockquote>« Leur pain, c'est comme un vieux ami. Tu le reconnais, tu le fais confiance. Et puis un jour, il vous sauve la vie. »</blockquote>
+    <div class="testi-author">— Marie, cliente depuis 2009</div>
+  </div>
+</section>
+
+<!-- CTA / FOOTER -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="big">Venez goûter<br>le <em>matin</em>.<br>Le reste, on s'occupe du <em>reste.</em></div>
+    <div class="footer-grid">
+      <div>
+        <h4>Visitez-nous</h4>
+        <p>12 Rue des Épices<br>75002 Paris</p>
+        <p>Ouvert du mardi au dimanche<br>7h — 19h</p>
+      </div>
+      <div>
+        <h4>Commandes spéciales</h4>
+        <p>Commandes pour événements, mariages, anniversaires : par téléphone ou WhatsApp.</p>
+        <p>Commande groupée hebdomadaire : chaque vendredi midi.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Maison Dorée</span>
+      <span>Fait main, dans le respect des anciennes recettes</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll animations : les images de la galerie defilent (reveal au scroll)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.g-card').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

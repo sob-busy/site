@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONLY GOD — Boutique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Caveat:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --cream:#FAF5EC; --ink:#221A14; --green:#1E3A2F; --gold:#C9A227; --terracotta:#B85C38; --sage:#7D8C6F; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Inter',sans-serif; background:var(--cream); color:var(--ink); font-weight:300; line-height:1.6; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; }
+  h1,h2,h3 { font-family:'Fraunces',serif; font-weight:400; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  /* NAV */
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:20px 0; transition:background .3s, padding .3s; background:transparent; }
+  nav.scrolled { background:rgba(250,245,236,.92); backdrop-filter:blur(8px); padding:12px 0; }
+  nav .wrap { display:flex; justify-content:space-between; align-items:center; }
+  .logo { font-family:'Fraunces',serif; font-size:28px; letter-spacing:.5px; color:var(--cream); text-decoration:none; transition:color .3s; }
+  nav.scrolled .logo { color:var(--ink); }
+  .logo em { color:var(--gold); font-style:italic; }
+  .nav-links { display:flex; gap:30px; list-style:none; }
+  .nav-links a { text-decoration:none; color:var(--cream); font-size:13px; letter-spacing:2px; text-transform:uppercase; font-weight:400; transition:color .3s; }
+  nav.scrolled .nav-links a { color:var(--ink); }
+  .nav-links a:hover { color:var(--gold); }
+  nav.scrolled .nav-links a:hover { color:var(--terracotta); }
+  .btn-wa { display:inline-block; background:var(--gold); color:#221A14; padding:12px 26px; border-radius:100px; text-decoration:none; font-size:12px; letter-spacing:2px; text-transform:uppercase; font-weight:500; transition:transform .2s, box-shadow .2s; }
+  .btn-wa:hover { transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--ink); }
+  .burger { display:none; font-size:26px; background:none; border:none; cursor:pointer; color:var(--cream); }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; align-items:center; padding:140px 0 90px; position:relative; background:linear-gradient(160deg,#1E3A2F 0%, #14251d 60%, #0f1d15 100%); color:var(--cream); overflow:hidden; }
+  .hero::after { content:''; position:absolute; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"); }
+  .hero .wrap { position:relative; z-index:2; }
+  .hero-tag { font-family:'Caveat',cursive; font-size:28px; color:var(--gold); transform:rotate(-3deg); display:inline-block; }
+  .hero h1 { font-size:clamp(46px,7.5vw,96px); line-height.98; letter-spacing:-2px; margin:18px 0 26px; color:var(--cream); }
+  .hero h1 em { font-style:italic; color:var(--gold); font-weight:300; }
+  .hero p { font-size:18px; max-width:460px; color:rgba(250,245,236,.8); }
+  .hero-actions { display:flex; gap:18px; margin-top:40px; flex-wrap:wrap; }
+
+  .btn { display:inline-block; padding:16px 34px; border-radius:100px; text-decoration:none; font-size:13px; letter-spacing:2.5px; text-transform:uppercase; font-weight:500; transition:transform .2s, box-shadow .2s; border:none; cursor:pointer; }
+  .btn-solid { background:var(--gold); color:#221A14; box-shadow:5px 5px 0 var(--ink); }
+  .btn-solid:hover { transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--ink); }
+  .btn-ghost { background:transparent; color:var(--cream); border:1.5px solid rgba(250,245,236,.6); }
+  .btn-ghost:hover { background:var(--cream); color:var(--ink); }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee { background:var(--green); color:var(--cream); overflow:hidden; padding:16px 0; }
+  .marquee-track { display:flex; gap:60px; width:max-content; animation:scroll 26s linear infinite; }
+  .marquee-track span { font-family:'Fraunces',serif; font-size:22px; white-space:nowrap; }
+  .marquee-track span i { color:var(--gold); font-style:normal; }
+  @keyframes scroll { to { transform:translateX(-50%); } }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding:120px 0; }
+  .section-label { font-family:'Caveat',cursive; font-size:30px; color:var(--terracotta); display:block; margin-bottom:14px; }
+  .section-title { font-size:clamp(38px,5vw,60px); line-height:1.05; letter-spacing:-1px; max-width:720px; }
+  .section-title em { font-style:italic; color:var(--terracotta); }
+
+  /* ---------- PRODUITS ---------- */
+  .produits { background:var(--cream); }
+  .grid-prod { display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:60px; }
+  .card-prod { background:#fff; border:2px solid var(--ink); box-shadow:8px 8px 0 var(--green); display:flex; flex-direction:column; transition:transform .25s, box-shadow .25s; }
+  .card-prod:hover { transform:translate(-3px,-3px); box-shadow:11px 11px 0 var(--green); }
+  .card-img { height:220px; display:flex; align-items:center; justify-content:center; font-size:84px; border-bottom:2px solid var(--ink); }
+  .card-body { padding:24px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .card-body h3 { font-size:26px; }
+  .card-body p { font-size:14px; color:#7a6a58; flex:1; }
+  .card-foot { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
+  .price { font-family:'Fraunces',serif; font-size:26px; color:var(--terracotta); }
+  .btn-small { background:var(--green); color:var(--cream); padding:11px 20px; border-radius:100px; text-decoration:none; font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500; transition:transform .2s; }
+  .btn-small:hover { transform:translateY(-2px); }
+
+  /* ---------- COMMANDE / WHATSAPP ---------- */
+  .commande { background:var(--green); color:var(--cream); text-align:center; }
+  .commande .section-title { color:var(--cream); margin:0 auto; }
+  .commande .section-title em { color:var(--gold); }
+  .commande p { max-width:560px; margin:26px auto 40px; color:rgba(250,245,236,.8); font-size:17px; }
+  .btn-wa-big { display:inline-block; background:var(--gold); color:#221A14; padding:20px 46px; border-radius:100px; text-decoration:none; font-size:14px; letter-spacing:3px; text-transform:uppercase; font-weight:500; transition:transform .2s, box-shadow .2s; box-shadow:6px 6px 0 var(--ink); }
+  .btn-wa-big:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--ink); }
+
+  /* ---------- CONTACT ---------- */
+  .contact { background:var(--cream); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-top:60px; }
+  .contact-info h3 { font-size:34px; margin-bottom:18px; }
+  .contact-info p { margin-bottom:14px; color:#5c4a3a; }
+  .tel { display:inline-block; margin-top:10px; font-family:'Fraunces',serif; font-size:24px; color:var(--terracotta); text-decoration:none; border-bottom:2px solid var(--terracotta); }
+  .tel:hover { color:var(--ink); }
+
+  footer { background:var(--ink); color:rgba(250,245,236,.7); padding:50px 0 30px; text-align:center; font-size:14px; }
+  footer .big { font-family:'Fraunces',serif; font-size:clamp(30px,4.5vw,52px); color:var(--cream); line-height:1.1; }
+  footer .big em { color:var(--gold); }
+  footer small { display:block; margin-top:14px; color:rgba(250,245,236,.5); }
+
+  @media (max-width:900px) { .grid-prod { grid-template-columns:1fr 1fr; } .contact-grid { grid-template-columns:1fr; } }
+  @media (max-width:560px) { .grid-prod { grid-template-columns:1fr; } .nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo">ONLY <em>GOD</em></a>
+    <ul class="nav-links">
+      <li><a href="#produits">Produits</a></li>
+      <li><a href="#commande">Commander</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank" class="btn-wa">💬 WhatsApp</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="hero-tag">Seule Lui, notre force</span>
+    <h1>Un seul <em>Dieu.</em><br>Une seule foi.</h1>
+    <p>Les produits ONLY GOD, faits avec foi et soin. T-shirts, accessoires et objets de culte pour nourrir ton cœur.</p>
+    <div class="hero-actions">
+      <a href="#produits" class="btn btn-solid">Découvrir la boutique</a>
+      <a href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank" class="btn btn-ghost">Rejoindre le groupe</a>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Seule Lui <i>•</i></span><span>Foi inébranlable <i>•</i></span><span>Amour éternel <i>•</i></span><span>Bénédiction <i>•</i></span>
+    <span>Seule Lui <i>•</i></span><span>Foi inébranlable <i>•</i></span><span>Amour éternel <i>•</i></span><span>Bénédiction <i>•</i></span>
+  </div>
+</div>
+
+<!-- PRODUITS -->
+<section class="produits" id="produits">
+  <div class="wrap">
+    <span class="section-label">La boutique</span>
+    <h2 class="section-title">Nos <em>produits</em></h2>
+    <div class="grid-prod">
+      <div class="card-prod">
+        <div class="card-img">🙏</div>
+        <div class="card-body">
+          <h3>Only God T-Shirt</h3>
+          <p>T-shirt premium 100% coton, impression exclusive. Parfait pour porter ta foi.</p>
+          <div class="card-foot">
+            <span class="price">25€</span>
+            <a class="btn-small" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">Commander</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-prod">
+        <div class="card-img">✝️</div>
+        <div class="card-body">
+          <h3>Sacré-Cœur Bénit</h3>
+          <p>Objet dérivé du Sacré-Cœur, bénit selon les rites. Un symbole d'amour.</p>
+          <div class="card-foot">
+            <span class="price">18€</span>
+            <a class="btn-small" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">Commander</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-prod">
+        <div class="card-img">🕊️</div>
+        <div class="card-body">
+          <h3>Mince Only God</h3>
+          <p>Mince brodée main, inspirée des valeurs de l'Only God.</p>
+          <div class="card-foot">
+            <span class="price">12€</span>
+            <a class="btn-small" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">Commander</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-prod">
+        <div class="card-img">📿</div>
+        <div class="card-body">
+          <h3>Bénédiction</h3>
+          <p>Ensemble de prières et objets pour célébrer ONLY GOD.</p>
+          <div class="card-foot">
+            <span class="price">32€</span>
+            <a class="btn-small" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">Commander</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-prod">
+        <div class="card-img">⭐</div>
+        <div class="card-body">
+          <h3>T-shirt Heritage</h3>
+          <p>T-shirt premium avec citation ONLY GOD.</p>
+          <div class="card-foot">
+            <span class="price">25€</span>
+            <a class="btn-small" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">Commander</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-prod">
+        <div class="card-img">🕯️</div>
+        <div class="card-body">
+          <h3>Accessoire Only God</h3>
+          <p>Petit accessoire pour accompagner la dévotion.</p>
+          <div class="card-foot">
+            <span class="price">15€</span>
+            <a class="btn-small" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">Commander</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMANDE / WHATSAPP -->
+<section class="commande" id="commande">
+  <div class="wrap">
+    <span class="section-label">Passer commande</span>
+    <h2 class="section-title">Rejoins le <em>groupe WhatsApp</em></h2>
+    <p>Pour toute commande, passe par notre groupe WhatsApp : dis-nous ce que tu veux, notre équipe te confirme et te remet les produits.</p>
+    <a class="btn-wa-big" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">💬 Rejoindre le groupe WhatsApp</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="section-label">Contact</span>
+    <h2 class="section-title">Pour une <em>commande</em></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Écris-nous sur WhatsApp</h3>
+        <p>Le plus rapide : rejoint le groupe et écris ta commande.</p>
+        <a class="tel" href="https://chat.whatsapp.com/Dw1xly9oo3lCyFWVtFbsyO" target="_blank">💬 Groupe WhatsApp</a>
+      </div>
+      <div class="contact-info">
+        <h3>Ou contacte-nous directement</h3>
+        <p>Pour toute demande ou renseignement.</p>
+        <a class="tel" href="tel:+22892889112">📱 +228 928 891 12</a>
+        <a class="tel" href="tel:+22891769992">📱 +228 91 76 99 92</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="big">Un seul <em>Dieu.</em></div>
+    <small>© 2026 ONLY GOD — Tous droits réservés</small>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); });
+</script>
+</body>
+</html>

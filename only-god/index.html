@@ -67,7 +67,8 @@
   .grid-prod { display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:60px; }
   .card-prod { background:#fff; border:2px solid var(--ink); box-shadow:8px 8px 0 var(--green); display:flex; flex-direction:column; transition:transform .25s, box-shadow .25s; }
   .card-prod:hover { transform:translate(-3px,-3px); box-shadow:11px 11px 0 var(--green); }
-  .card-img { height:220px; display:flex; align-items:center; justify-content:center; font-size:84px; border-bottom:2px solid var(--ink); }
+  .card-img { height:220px; border-bottom:2px solid var(--ink); overflow:hidden; }
+  .card-img img { width:100%; height:100%; object-fit:cover; display:block; }
   .card-body { padding:24px; display:flex; flex-direction:column; gap:10px; flex:1; }
   .card-body h3 { font-size:26px; }
   .card-body p { font-size:14px; color:#7a6a58; flex:1; }
@@ -145,7 +146,7 @@
     <h2 class="section-title">Nos <em>produits</em></h2>
     <div class="grid-prod">
       <div class="card-prod">
-        <div class="card-img">🙏</div>
+        <div class="card-img"><img src="1.jpeg" alt="Only GOD T-Shirt"></div>
         <div class="card-body">
           <h3>ONLY GOD T-Shirt</h3>
           <p>T-shirt premium 100% coton, impression exclusive. Parfait pour porter ta foi.</p>
@@ -156,7 +157,7 @@
         </div>
       </div>
       <div class="card-prod">
-        <div class="card-img">✝️</div>
+        <div class="card-img"><img src="2.jpeg" alt="Sacré-Cœur Bénit"></div>
         <div class="card-body">
           <h3>Sacré-Cœur Bénit</h3>
           <p>Objet dérivé du Sacré-Cœur, bénit selon les rites. Un symbole d'amour.</p>
@@ -167,7 +168,7 @@
         </div>
       </div>
       <div class="card-prod">
-        <div class="card-img">🕊️</div>
+        <div class="card-img"><img src="3.jpeg" alt="Mince ONLY GOD"></div>
         <div class="card-body">
           <h3>Mince ONLY GOD</h3>
           <p>Mince brodée main, inspirée des valeurs de l'Only God.</p>
@@ -178,7 +179,7 @@
         </div>
       </div>
       <div class="card-prod">
-        <div class="card-img">📿</div>
+        <div class="card-img"><img src="4.jpeg" alt="Bénédiction"></div>
         <div class="card-body">
           <h3>Bénédiction</h3>
           <p>Ensemble de prières et objets pour célébrer ONLY GOD.</p>
@@ -189,7 +190,7 @@
         </div>
       </div>
       <div class="card-prod">
-        <div class="card-img">⭐</div>
+        <div class="card-img"><img src="5.jpeg" alt="T-shirt Heritage"></div>
         <div class="card-body">
           <h3>T-shirt Heritage</h3>
           <p>T-shirt premium avec citation ONLY GOD.</p>
@@ -200,7 +201,7 @@
         </div>
       </div>
       <div class="card-prod">
-        <div class="card-img">🕯️</div>
+        <div class="card-img"><img src="6.jpeg" alt="Accessoire ONLY GOD"></div>
         <div class="card-body">
           <h3>Accessoire ONLY GOD</h3>
           <p>Petit accessoire pour accompagner la dévotion.</p>
